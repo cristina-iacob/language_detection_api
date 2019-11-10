@@ -6,17 +6,17 @@
         integrity="sha384-LS4/wo5Z/8SLpOLHs0IbuPAGOWTx30XSoZJ8o7WKH0UJhRpjXXTpODOjfVnNjeHu" crossorigin="anonymous">
 
     <style>
-    .winner{
-        color:lightgreen;
-    }
-    </style>    
+        .winner {
+            color: lightgreen;
+        }
+    </style>
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a class="navbar-brand" style="background-color:white; border-radius:5px !important" href="/"><img alt="What Language" title="Hi!" width=60
-                class="img-fluid img-thumbnail rounded" style="border-color:white; background-color:white;"
-                src="./images/wl_icon.png"></a>
+        <a class="navbar-brand" style="background-color:white; border-radius:5px !important" href="/"><img
+                alt="What Language" title="Hi!" width=60 class="img-fluid img-thumbnail rounded"
+                style="border-color:white; background-color:white;" src="./images/wl_icon.png"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
             aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -41,39 +41,37 @@
         <h1 class="display-5">What Language?</h1>
         <p class="lead">Hi, I am a simple language detector!</p>
         <p>I have been taught to distinguish between the following languages:
-        <br><strong style="color:lightblue">English,&nbsp;&nbsp;French,&nbsp;&nbsp;German,&nbsp;&nbsp;Romanian</strong>
+            <br><strong
+                style="color:lightblue">English,&nbsp;&nbsp;French,&nbsp;&nbsp;German,&nbsp;&nbsp;Romanian</strong>
         </p>
         <hr class="my-4">
         <div class="container" style="background-color:#343a40; border-radius:5px;">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="row" style="margin:10px;">
-                            
-                            {% for robuts in robots %}
-                            <div class="card col-sm-4 border-primary" style="border-radius:5px;"> 
-                                <div class="card-header m-2" style="border-radius:5px;"><h4 class="card-title">Guess #{{loop.index}} for:<br><strong style="color:lightblue">{{ word }}</strong></h4></div>
-                                <div class="card-body">
-                                    {% for robot in robuts %}
-                                    <h4 class="card-title{%if robot.winner %} winner{% endif %}">{{ robot.confidence }}% - {{ robot.language }}</h4>                          
-                                    {% endfor %}
-                                </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="row" style="margin:10px;">
+
+                        {% for robuts in robots %}
+                        <div class="card col-sm-4 border-primary" style="border-radius:5px;">
+                            <div class="card-header m-2" style="border-radius:5px;">
+                                <h4 class="card-title">Guess #{{loop.index}} for:<br><strong
+                                        style="color:lightblue">{{ word }}</strong></h4>
                             </div>
-                            {% endfor %}
-                            <div class="card col-sm-4 border-primary" style="border-radius:5px;"> 
-                                    <div class="card-header m-2" style="border-radius:5px;"><h4 class="card-title">Guess # for:<br><strong style="color:lightblue"></strong></h4></div>
-                                    <div class="card-body">
-                                     
-                                        <h4 class="card-title winner">% - </h4>                          
-                                     
-                                    </div>
-                                </div>
-                            
+                            <div class="card-body">
+                                {% for robot in robuts %}
+                                <h4 class="card-title{%if robot.winner %} winner{% endif %}">{{ robot.confidence }}% -
+                                    {{ robot.language }}</h4>
+                                {% endfor %}
+                            </div>
                         </div>
-        
+                        {% endfor %}
+
+
                     </div>
+
                 </div>
             </div>
-            <hr class="my-4">
+        </div>
+        <hr class="my-4">
         <p>Enter your word below and I will guess what language it is.</p>
         <p class="lead">
             <div class="form-group">
