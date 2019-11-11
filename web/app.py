@@ -12,12 +12,15 @@ import os
 
 from tensorflow.keras.models import load_model
 
+# these variables need to match original training stats
 max_letters=12
 char_count=104
 char_count2=26
 
+# the languages used in training
 label_names=['english', 'french', 'german', 'romanian']
 
+# network to predict, must match one used for training
 network = Sequential()
 network.add(Dense(200, input_dim=(char_count*max_letters)-1, activation='sigmoid'))
 network.add(Dense(150, activation='sigmoid'))
@@ -27,9 +30,10 @@ network.add(Dense(len(label_names), activation='softmax'))
 
 network.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
+# load trained weights
 network = load_model("./lang_detect.hdf5")
 
-
+# network to predict, must match one used for training
 network2 = Sequential()
 network2.add(Dense(512, input_dim=(char_count2*max_letters)-1))
 network2.add(Activation('relu'))
@@ -42,8 +46,10 @@ network2.add(Dense(len(label_names), activation='softmax'))
 
 network2.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
+# load trained weights
 network2 = load_model("./lang_detect_n2.hdf5")
 
+# network to predict, must match one used for training
 network3 = Sequential()
 network3.add(Dense(512, input_dim=(char_count*max_letters)-1))
 network3.add(Activation('relu'))
@@ -56,8 +62,10 @@ network3.add(Dense(len(label_names), activation='softmax'))
 
 network3.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
+# load trained weights
 network3 = load_model("./lang_detect_n_sorted.hdf5")
 
+# use to convert input to vector in style used for training (one_hot_encoding)
 def convert_dic_to_vector(dic, max_word_length,chars_count):
     new_list = []
     for word in dic:
@@ -76,6 +84,7 @@ def convert_dic_to_vector(dic, max_word_length,chars_count):
    # print(len(new_list))
     return new_list
 
+# function takes word to guess, encodes it, returns 3 guesses and avg of 3 guesses
 def predict_word(word):
     dic = []
     guess = []
@@ -84,11 +93,15 @@ def predict_word(word):
     guess_avg = []
     guess_primary = []
 
+    # spacces were not used in taining and are not encoded in matrix
     word_trunc=word[:11].replace(" ", "")
     word_trunc=unidecode(word_trunc)
 
     dic.append(word_trunc)
     
+    # all sets of 3 variables for guesses could be merged into arrays in future but was easier to degub as is
+
+    # make sure char_count matches one used for training
     vct_str = convert_dic_to_vector(dic, max_letters-1, char_count)
     vct_str2 = convert_dic_to_vector(dic, max_letters-1, char_count2)
     vct_str3 = convert_dic_to_vector(dic, max_letters-1, char_count2)
@@ -112,12 +125,16 @@ def predict_word(word):
     for digit3 in vct_str3[0]:
         vct3[0,count3] = int(digit3)
         count3 += 1
+
+    # get prediction percents    
     prediction_vct = network.predict(vct)
     prediction2_vct = network2.predict(vct2)
     prediction3_vct = network3.predict(vct3)
     #print(prediction_vct)
     #print(prediction2_vct)
     #print(prediction3_vct)
+
+    # get best prediction for winner highlight
     prediction_winner = network.predict_classes(vct)
     prediction_winner2 = network2.predict_classes(vct2)
     prediction_winner3 = network3.predict_classes(vct3)
@@ -132,7 +149,6 @@ def predict_word(word):
         winner=0
         winner2=0
         winner3=0
-
 
         score = prediction_vct[0][i]
         score2 = prediction2_vct[0][i]
@@ -175,11 +191,13 @@ def predict_word(word):
             "confidence":round(((100*score)+(100*score2)+(100*score3))/3, 1),
             })
 
+        # to picjk average winner
         avg_conf=round(((100*score)+(100*score2)+(100*score3))/3, 1)
         if avg_conf > avg_conf_top:
             avg_conf_top=avg_conf
             # print(f"{avg_conf} > {avg_conf_top}")
 
+    # to set average winner
     for guesses in guess_avg:
         if guesses["confidence"]>=avg_conf_top:
             # print(guesses["confidence"])
