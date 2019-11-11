@@ -81,6 +81,8 @@ def predict_word(word):
     guess = []
     guess2 = []
     guess3 = []
+    guess_avg = []
+    guess_primary = []
 
     word_trunc=word[:11].replace(" ", "")
     word_trunc=unidecode(word_trunc)
@@ -122,12 +124,16 @@ def predict_word(word):
 
     langs = list(label_names)
 
+    avg_conf_top=0
+    avg_conf=0
 
     for i in range(len(label_names)):
         lang = langs[i]
         winner=0
         winner2=0
         winner3=0
+
+
         score = prediction_vct[0][i]
         score2 = prediction2_vct[0][i]
         score3 = prediction3_vct[0][i]
@@ -162,12 +168,31 @@ def predict_word(word):
             "confidence":round(100*score3, 1),
             })
 
-        #print(prediction_winner)    
-        #print(prediction_winner2)
-        #print(lang + ': ' + str(round(100*score, 2)) + '%')
+        guess_avg.append({
+            "winner" : 0,
+            "word": word, 
+            "language": lang, 
+            "confidence":round(((100*score)+(100*score2)+(100*score3))/3, 1),
+            })
+
+        avg_conf=round(((100*score)+(100*score2)+(100*score3))/3, 1)
+        if avg_conf > avg_conf_top:
+            avg_conf_top=avg_conf
+            # print(f"{avg_conf} > {avg_conf_top}")
+
+    for guesses in guess_avg:
+        if guesses["confidence"]>=avg_conf_top:
+            # print(guesses["confidence"])
+            # print(">=")
+            # print(avg_conf_top)
+            guesses["winner"]=1
+
+    #print(prediction_winner)    
+    #print(prediction_winner2)
+    #print(lang + ': ' + str(round(100*score, 2)) + '%')
 
     #print(prediction_winner[0])
-    return guess, guess2, guess3
+    return guess, guess2, guess3, guess_avg
 
 # Flask Setup
 app = Flask(__name__, static_url_path='')
@@ -187,4 +212,5 @@ def about():
 	return app.send_static_file('about.html')
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    #debug=True
+    app.run()

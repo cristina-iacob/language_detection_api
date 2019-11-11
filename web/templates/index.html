@@ -51,10 +51,19 @@
                     <div class="row" style="margin:10px;">
 
                         {% for robuts in robots %}
-                        <div class="card col-sm-4 border-primary" style="border-radius:5px;">
+                        {% if loop.index < 4 %}
+                        <div class="card col-md-3 col-sm-6 border-primary" style="border-radius:5px;">
+                        {% else %}
+                        <div class="card col-md-3 col-sm-6 border-success" style="border-radius:5px;">
+                        {% endif %}
                             <div class="card-header m-2" style="border-radius:5px;">
+                                {% if loop.index < 4 %}
                                 <h4 class="card-title">Guess #{{loop.index}} for:<br><strong
                                         style="color:lightblue">{{ word }}</strong></h4>
+                                {% else %}
+                                <h4 class="card-title" style="color:lightgreen">Combined Guess:<br><strong
+                                    style="color:lightblue">{{ word }}</strong></h4>
+                                {% endif %}
                             </div>
                             <div class="card-body">
                                 {% for robot in robuts %}
