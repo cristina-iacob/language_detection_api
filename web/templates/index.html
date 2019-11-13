@@ -61,7 +61,7 @@
                         {% endif %}
                             <div class="card-header m-2" style="border-radius:5px;">
                                 {% if loop.index < 4 %}
-                                <h4 class="card-title">Guess #{{loop.index}} for:<br><strong
+                                <h4 class="card-title">{% if loop.index==1 %}Cpt. Random{% elif loop.index==2 %}Mrs. Malaprop{% elif loop.index==3 %}Trump{% endif %}<br><strong
                                         style="color:lightblue">{{ word }}</strong></h4>
                                 {% else %}
                                 <h4 class="card-title" style="color:lightgreen">Combined Guess:<br><strong
