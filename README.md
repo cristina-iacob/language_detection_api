@@ -7,9 +7,7 @@ Getting Started
 3. In web folder, run $python app.py 
 4. Open browser to http://localhost:5000/
 
-![Training Models]
-(./ml_models.png)
+![Training Models](./ml_models.png)
 
 
-![Tableau Visualizations]
-(./Screen Shot 2019-11-12 at 8.35.01 PM.png)
+![Tableau Visualizations](./Screen Shot 2019-11-12 at 8.35.01 PM.png)
