@@ -229,6 +229,10 @@ def root():
 def about():
 	return app.send_static_file('about.html')
 
+@app.route('/charts')
+def charts():
+	return app.send_static_file('charts.html')
+
 if __name__ == "__main__":
     #debug=True
     app.run()
