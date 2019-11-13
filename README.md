@@ -8,8 +8,8 @@ Getting Started
 4. Open browser to http://localhost:5000/
 
 ![Training Models]
-(/Users/arunima_menon/Downloads/ml_models.png)
+(ml_models.png)
 
 
 ![Tableau Visualizations]
-(/Users/arunima_menon/Downloads/Screen Shot 2019-11-12 at 8.35.01 PM.png)
+(Screen Shot 2019-11-12 at 8.35.01 PM.png)
