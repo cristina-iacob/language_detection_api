@@ -1,4 +1,11 @@
-# Final-Project---Machine-Learning
+# Language Identification
+
+
+Final-Project - Machine-Learning
+
+Team members: Adam Forest Newlyn, Allison Bolger, Arunima Menon, Cristina Iacob
+
+Data link: https://drive.google.com/drive/folders/1eELkoQka39Z0Qd-4mv_Z_cqxUROURzoU?usp=sharing
 
 Getting Started
 
