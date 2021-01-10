@@ -1,7 +1,6 @@
-# Language Identification
+### Language Identification
 
 
-Final Project: Machine-Learning
 
 Team members: Adam Forest Newlyn, Allison Bolger, Arunima Menon, Cristina Iacob
 
